@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>supergan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="注解入门Annotation, 可以被其他程序读取 Annotation是从&#x3D;&#x3D;JDK5.0&#x3D;&#x3D; 开始引入的技术  注解的作用： 可以对程序做出解释 （类似于平时写的注释） 可以被其他程序读取（如：编译器等  注解的格式： 以 @[注释名] 的形式在代码中存在，并且还可以添加一些参数 e.g. @SuppressWarnings(value &#x3D; “unchecked”)  注解 可以用在哪？ 附加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supergan">
+<meta property="og:url" content="http://example.com/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E6%B3%A8%E8%A7%A3/index.html">
+<meta property="og:site_name" content="supergan">
+<meta property="og:description" content="注解入门Annotation, 可以被其他程序读取 Annotation是从&#x3D;&#x3D;JDK5.0&#x3D;&#x3D; 开始引入的技术  注解的作用： 可以对程序做出解释 （类似于平时写的注释） 可以被其他程序读取（如：编译器等  注解的格式： 以 @[注释名] 的形式在代码中存在，并且还可以添加一些参数 e.g. @SuppressWarnings(value &#x3D; “unchecked”)  注解 可以用在哪？ 附加">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-29T03:39:05.962Z">
+<meta property="article:modified_time" content="2022-03-29T06:40:58.379Z">
+<meta property="article:author" content="supergan">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="supergan" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">supergan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java/注解反射/注解" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E6%B3%A8%E8%A7%A3/" class="article-date">
+  <time class="dt-published" datetime="2022-03-29T03:39:05.962Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="注解"><a href="#注解" class="headerlink" title="注解"></a>注解</h1><h3 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h3><pre><code>Annotation, 可以被其他程序读取
+Annotation是从==JDK5.0== 开始引入的技术
+
+注解的作用：
+可以对程序做出解释 （类似于平时写的注释）
+可以被其他程序读取（如：编译器等
+
+注解的格式：
+以 @[注释名] 的形式在代码中存在，并且还可以添加一些参数
+e.g. @SuppressWarnings(value = “unchecked”)
+
+注解 可以用在哪？
+附加在 ==package、class 、method、field==等上面，相当于给他们添加了额外的辅助信息
+可以通过反射机制编程实现对元数据的访问
+</code></pre>
+<h3 id="内置注解"><a href="#内置注解" class="headerlink" title="内置注解"></a>内置注解</h3><pre><code>1. @Override:重写注解
+2. @Deprecated:修辞方法,废弃注解
+3. @SuppressWarnings:抑制编译时的警告信息
+</code></pre>
+<h3 id="元注解"><a href="#元注解" class="headerlink" title="元注解"></a>元注解</h3><blockquote>
+<p>作用：负责注解其他注解</p>
+</blockquote>
+<pre><code> 1. @Target:描述注解使用范围
+ 2. @Retention:描述注解的生命周期
+ 3. @Document:该注解将被包含到javadoc中
+ 4. @Inherited:子类可以继承父类中的该注解
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MyAnnotation</span> <span class="comment">//not applitable to class</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="meta">@MyAnnotation</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//定义一个注解类</span></span><br><span class="line"><span class="comment">// Target表示我们的注解可以用在哪些地方</span></span><br><span class="line"><span class="meta">@Target(value =&#123;ElementType.METHOD,ElementType.TYPE&#125; )</span><span class="comment">//方法和类</span></span><br><span class="line"><span class="comment">// Retention 表示注解在什么地方还有效</span></span><br><span class="line"><span class="meta">@Retention(value = RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Documented</span> <span class="comment">// 表示是否将为注解生成在 Javadoc中</span></span><br><span class="line"><span class="meta">@Inherited</span>  <span class="comment">// 子类可以继承父类的注解</span></span><br><span class="line"><span class="meta">@interface</span> MyAnnotation &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h3><pre><code>@interface,自动继承Annotation接口
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo04</span> &#123;</span><br><span class="line">    <span class="comment">// 注解可以显示赋值，若没有默认值，就必须给注解赋值，否则将报错</span></span><br><span class="line">    <span class="meta">@MyAnnotation01(name = &quot;lzh&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@MyAnnotation02(&quot;lzh&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test2</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(value = &#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> MyAnnotation01 &#123;</span><br><span class="line">    <span class="comment">// 注解的参数 ： 参数类型 + 参数名（）；</span></span><br><span class="line">    String <span class="title function_">name</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">age</span><span class="params">()</span> <span class="keyword">default</span>  <span class="number">0</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">id</span><span class="params">()</span> <span class="keyword">default</span> -<span class="number">1</span>; <span class="comment">// 如果默认值为-1，代表不存在</span></span><br><span class="line">    String[] schools() <span class="keyword">default</span> &#123;<span class="string">&quot;清华大学&quot;</span>&#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(value = &#123;ElementType.TYPE, ElementType.METHOD&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@interface</span> MyAnnotation02&#123;</span><br><span class="line">    String <span class="title function_">value</span><span class="params">()</span>; <span class="comment">// 只有一个参数 默认为value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E6%B3%A8%E8%A7%A3/" data-id="cl4ihkcrk000m7sohdwhycnml" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E5%8F%8D%E5%B0%84/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/vx/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/17/hello-world/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/17/mysql/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/cn.itcast.ConcurrencyTest/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/index/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 supergan<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>supergan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Nacos快速入门1. 引入依赖12345&lt;!--nacos客户端--&gt;&lt;dependency&gt;    &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;&amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supergan">
+<meta property="og:url" content="http://example.com/2022/05/16/java/SpringCloudAlibaba/nacos%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/nacos%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="supergan">
+<meta property="og:description" content="Nacos快速入门1. 引入依赖12345&lt;!--nacos客户端--&gt;&lt;dependency&gt;    &lt;groupId&gt;com.alibaba.cloud&lt;&#x2F;groupId&gt;    &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;&#x2F;artifactId&gt;&amp;lt">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/%E5%A4%9A%E5%AE%9E%E4%BE%8B.png">
+<meta property="article:published_time" content="2022-05-16T08:17:32.344Z">
+<meta property="article:modified_time" content="2022-05-17T02:23:53.695Z">
+<meta property="article:author" content="supergan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E5%A4%9A%E5%AE%9E%E4%BE%8B.png">
+  
+    <link rel="alternate" href="/atom.xml" title="supergan" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">supergan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java/SpringCloudAlibaba/nacos服务调用/nacos入门" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/16/java/SpringCloudAlibaba/nacos%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/nacos%E5%85%A5%E9%97%A8/" class="article-date">
+  <time class="dt-published" datetime="2022-05-16T08:17:32.344Z" itemprop="datePublished">2022-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Nacos快速入门"><a href="#Nacos快速入门" class="headerlink" title="Nacos快速入门"></a>Nacos快速入门</h3><h4 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--nacos客户端--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-在启动主类上加入注解-EnableDiscoveryClient"><a href="#2-在启动主类上加入注解-EnableDiscoveryClient" class="headerlink" title="2. 在启动主类上加入注解@EnableDiscoveryClient"></a>2. 在启动主类上加入注解<code>@EnableDiscoveryClient</code></h4><h4 id="3-在配置文件中加入配置"><a href="#3-在配置文件中加入配置" class="headerlink" title="3. 在配置文件中加入配置"></a>3. 在配置文件中加入配置</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-负载均衡"><a href="#4-负载均衡" class="headerlink" title="4. 负载均衡"></a>4. 负载均衡</h5><p>​	提供者微服务多实例配置，实现<strong>客户端</strong>负载均衡</p>
+<p><img src="/../img/%E5%A4%9A%E5%AE%9E%E4%BE%8B.png"></p>
+<p>​	<strong>基于<code>Ribbon</code>实现负载均衡:在消费者微服务主类restTemplate()方法上添加<code>@LoadBalanced</code>注解</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	Ribbon默认的负载均衡策略是<strong>轮询</strong>，如果要修改负载均衡策略，需要添加消费者的配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">service-product:</span> <span class="comment">#调用的提供者的名称</span></span><br><span class="line">    <span class="attr">ribbon:</span></span><br><span class="line">      <span class="attr">NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span> <span class="comment">#随机</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="5-远程服务调用"><a href="#5-远程服务调用" class="headerlink" title="5. 远程服务调用"></a>5. 远程服务调用</h5><pre><code> 1. 通过**restTemplate**调用，首先在消费者控制器中注入restTemplate
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RocketMQTemplate rocketMQTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">//service-product 服务提供者名称, product/ 服务提供者调用请求地址</span></span><br><span class="line"><span class="type">Product</span> <span class="variable">product</span> <span class="operator">=</span></span><br><span class="line">                restTemplate.getForObject(</span><br><span class="line">                        <span class="string">&quot;http://service-product/product/&quot;</span> + pid, Product.class);</span><br></pre></td></tr></table></figure>
+
+<p>该方法的缺点：1. 代码可读性不好     2. 编码风格不一致</p>
+<ol start="2">
+<li>基于<strong>Fegin</strong>实现服务调用</li>
+</ol>
+<ul>
+<li>在消费者中引入依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--fegin--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在消费者主类上开启fegin客户端的注解**<code>@EnableFeignClients</code>**</li>
+<li>修改服务调用代码，在消费者微服务中添加提供者服务层接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;service-product&quot;,)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ProductService</span> &#123;</span><br><span class="line">    <span class="comment">//@FeignClient的value + @GetMapping的value  ==&gt;  &quot;http://service-product/product/&quot; + pid</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/product/&#123;pid&#125;&quot;)</span></span><br><span class="line">    Product <span class="title function_">findByPid</span><span class="params">(<span class="meta">@PathVariable</span> Integer pid)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后在消费者控制器中注入提供者服务层接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> ProductService productService;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用商品微服务</span></span><br><span class="line"><span class="type">Product</span> <span class="variable">product</span> <span class="operator">=</span> productService.findByPid(pid);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/16/java/SpringCloudAlibaba/nacos%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/nacos%E5%85%A5%E9%97%A8/" data-id="cl4ihkcrn000t7soh4npr71tx" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/17/java/SpringCloudAlibaba/Sentinel%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/09/java/SpringCloudAlibaba/Sentinel%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/Sentinel%E6%8C%81%E4%B9%85%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/17/hello-world/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/17/mysql/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/cn.itcast.ConcurrencyTest/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/index/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 supergan<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

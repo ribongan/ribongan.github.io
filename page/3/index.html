@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>supergan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="supergan">
+<meta property="og:url" content="http://example.com/page/3/index.html">
+<meta property="og:site_name" content="supergan">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="supergan">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="supergan" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">supergan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-java/SpringCloudAlibaba/nacos服务调用/nacos入门" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/16/java/SpringCloudAlibaba/nacos%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/nacos%E5%85%A5%E9%97%A8/" class="article-date">
+  <time class="dt-published" datetime="2022-05-16T08:17:32.344Z" itemprop="datePublished">2022-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Nacos快速入门"><a href="#Nacos快速入门" class="headerlink" title="Nacos快速入门"></a>Nacos快速入门</h3><h4 id="1-引入依赖"><a href="#1-引入依赖" class="headerlink" title="1. 引入依赖"></a>1. 引入依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--nacos客户端--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-alibaba-nacos-discovery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-在启动主类上加入注解-EnableDiscoveryClient"><a href="#2-在启动主类上加入注解-EnableDiscoveryClient" class="headerlink" title="2. 在启动主类上加入注解@EnableDiscoveryClient"></a>2. 在启动主类上加入注解<code>@EnableDiscoveryClient</code></h4><h4 id="3-在配置文件中加入配置"><a href="#3-在配置文件中加入配置" class="headerlink" title="3. 在配置文件中加入配置"></a>3. 在配置文件中加入配置</h4><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">cloud:</span></span><br><span class="line">    <span class="attr">nacos:</span></span><br><span class="line">      <span class="attr">discovery:</span></span><br><span class="line">        <span class="attr">server-addr:</span> <span class="string">localhost:8848</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-负载均衡"><a href="#4-负载均衡" class="headerlink" title="4. 负载均衡"></a>4. 负载均衡</h5><p>​	提供者微服务多实例配置，实现<strong>客户端</strong>负载均衡</p>
+<p><img src="/../img/%E5%A4%9A%E5%AE%9E%E4%BE%8B.png"></p>
+<p>​	<strong>基于<code>Ribbon</code>实现负载均衡:在消费者微服务主类restTemplate()方法上添加<code>@LoadBalanced</code>注解</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@LoadBalanced</span></span><br><span class="line"><span class="keyword">public</span> RestTemplate <span class="title function_">restTemplate</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RestTemplate</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​	Ribbon默认的负载均衡策略是<strong>轮询</strong>，如果要修改负载均衡策略，需要添加消费者的配置</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">service-product:</span> <span class="comment">#调用的提供者的名称</span></span><br><span class="line">    <span class="attr">ribbon:</span></span><br><span class="line">      <span class="attr">NFLoadBalancerRuleClassName:</span> <span class="string">com.netflix.loadbalancer.RandomRule</span> <span class="comment">#随机</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="5-远程服务调用"><a href="#5-远程服务调用" class="headerlink" title="5. 远程服务调用"></a>5. 远程服务调用</h5><pre><code> 1. 通过**restTemplate**调用，首先在消费者控制器中注入restTemplate
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RocketMQTemplate rocketMQTemplate;</span><br><span class="line"></span><br><span class="line"><span class="comment">//service-product 服务提供者名称, product/ 服务提供者调用请求地址</span></span><br><span class="line"><span class="type">Product</span> <span class="variable">product</span> <span class="operator">=</span></span><br><span class="line">                restTemplate.getForObject(</span><br><span class="line">                        <span class="string">&quot;http://service-product/product/&quot;</span> + pid, Product.class);</span><br></pre></td></tr></table></figure>
+
+<p>该方法的缺点：1. 代码可读性不好     2. 编码风格不一致</p>
+<ol start="2">
+<li>基于<strong>Fegin</strong>实现服务调用</li>
+</ol>
+<ul>
+<li>在消费者中引入依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--fegin--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在消费者主类上开启fegin客户端的注解**<code>@EnableFeignClients</code>**</li>
+<li>修改服务调用代码，在消费者微服务中添加提供者服务层接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient(value = &quot;service-product&quot;,)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ProductService</span> &#123;</span><br><span class="line">    <span class="comment">//@FeignClient的value + @GetMapping的value  ==&gt;  &quot;http://service-product/product/&quot; + pid</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/product/&#123;pid&#125;&quot;)</span></span><br><span class="line">    Product <span class="title function_">findByPid</span><span class="params">(<span class="meta">@PathVariable</span> Integer pid)</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>然后在消费者控制器中注入提供者服务层接口</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> ProductService productService;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用商品微服务</span></span><br><span class="line"><span class="type">Product</span> <span class="variable">product</span> <span class="operator">=</span> productService.findByPid(pid);</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/16/java/SpringCloudAlibaba/nacos%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/nacos%E5%85%A5%E9%97%A8/" data-id="cl4ihkcrn000t7soh4npr71tx" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/SpringCloudAlibaba/Sentinel服务容错/Sentinel持久化" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/09/java/SpringCloudAlibaba/Sentinel%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/Sentinel%E6%8C%81%E4%B9%85%E5%8C%96/" class="article-date">
+  <time class="dt-published" datetime="2022-05-09T01:25:27.676Z" itemprop="datePublished">2022-05-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h3 id="Sentinel持久化"><a href="#Sentinel持久化" class="headerlink" title="Sentinel持久化"></a>Sentinel持久化</h3><h4 id="1-拉模式"><a href="#1-拉模式" class="headerlink" title="1.拉模式"></a>1.拉模式</h4><blockquote>
+<p>pull模式的数据源(本地文件、RDBMS等)一般是可写入的，使用时需要客户端注册数据源:将对应的读数据源注册到对应的RuleManager，将写数据源注册到transport的<code>WritableDataSourceRegistry</code>中</p>
+</blockquote>
+<h5 id="1-1-实现过程"><a href="#1-1-实现过程" class="headerlink" title="1.1 实现过程"></a>1.1 实现过程</h5><p><img src="/..%5Cimg%5C%E6%9C%AC%E5%9C%B0%E6%8C%81%E4%B9%85%E5%8C%96.png" alt="本地持久化"></p>
+<ol>
+<li>编写处理类</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//本地文件实现Sentinel规则持久化</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FilePersistence</span> <span class="keyword">implements</span> <span class="title class_">InitFunc</span> &#123;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;spring.application.name&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String applicationName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">ruleDir</span> <span class="operator">=</span> System.getProperty(<span class="string">&quot;user.home&quot;</span>) + <span class="string">&quot;/sentinel-rules/&quot;</span> + applicationName;</span><br><span class="line">        <span class="type">String</span> <span class="variable">flowRulePath</span> <span class="operator">=</span> ruleDir + <span class="string">&quot;/flow-rule.json&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">degradeRulePath</span> <span class="operator">=</span> ruleDir + <span class="string">&quot;/degrade-rule.json&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">systemRulePath</span> <span class="operator">=</span> ruleDir + <span class="string">&quot;/system-rule.json&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">authorityRulePath</span> <span class="operator">=</span> ruleDir + <span class="string">&quot;/authority-rule.json&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">paramFlowRulePath</span> <span class="operator">=</span> ruleDir + <span class="string">&quot;/param-flow-rule.json&quot;</span>;</span><br><span class="line">        <span class="built_in">this</span>.mkdirIfNotExits(ruleDir);</span><br><span class="line">        <span class="built_in">this</span>.createFileIfNotExits(flowRulePath);</span><br><span class="line">        <span class="built_in">this</span>.createFileIfNotExits(degradeRulePath);</span><br><span class="line">        <span class="built_in">this</span>.createFileIfNotExits(systemRulePath);</span><br><span class="line">        <span class="built_in">this</span>.createFileIfNotExits(authorityRulePath);</span><br><span class="line">        <span class="built_in">this</span>.createFileIfNotExits(paramFlowRulePath);</span><br><span class="line">        <span class="comment">// 流控规则</span></span><br><span class="line">        ReadableDataSource&lt;String, List&lt;FlowRule&gt;&gt; flowRuleRDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileRefreshableDataSource</span>&lt;&gt;(</span><br><span class="line">                flowRulePath,</span><br><span class="line">                flowRuleListParser</span><br><span class="line">        );</span><br><span class="line">        FlowRuleManager.register2Property(flowRuleRDS.getProperty());</span><br><span class="line">        WritableDataSource&lt;List&lt;FlowRule&gt;&gt; flowRuleWDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileWritableDataSource</span>&lt;&gt;(</span><br><span class="line">                flowRulePath,</span><br><span class="line">                <span class="built_in">this</span>::encodeJson</span><br><span class="line">        );</span><br><span class="line">        WritableDataSourceRegistry.registerFlowDataSource(flowRuleWDS);</span><br><span class="line">        <span class="comment">// 降级规则</span></span><br><span class="line">        ReadableDataSource&lt;String, List&lt;DegradeRule&gt;&gt; degradeRuleRDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileRefreshableDataSource</span>&lt;&gt;(</span><br><span class="line">                degradeRulePath,</span><br><span class="line">                degradeRuleListParser</span><br><span class="line">        );</span><br><span class="line">        DegradeRuleManager.register2Property(degradeRuleRDS.getProperty());</span><br><span class="line">        WritableDataSource&lt;List&lt;DegradeRule&gt;&gt; degradeRuleWDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileWritableDataSource</span>&lt;&gt;(</span><br><span class="line">                degradeRulePath,</span><br><span class="line">                <span class="built_in">this</span>::encodeJson</span><br><span class="line">        );</span><br><span class="line">        WritableDataSourceRegistry.registerDegradeDataSource(degradeRuleWDS);</span><br><span class="line">        <span class="comment">// 系统规则</span></span><br><span class="line">        ReadableDataSource&lt;String, List&lt;SystemRule&gt;&gt; systemRuleRDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileRefreshableDataSource</span>&lt;&gt;(</span><br><span class="line">                systemRulePath,</span><br><span class="line">                systemRuleListParser</span><br><span class="line">        );</span><br><span class="line">        SystemRuleManager.register2Property(systemRuleRDS.getProperty());</span><br><span class="line">        WritableDataSource&lt;List&lt;SystemRule&gt;&gt; systemRuleWDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileWritableDataSource</span>&lt;&gt;(</span><br><span class="line">                systemRulePath,</span><br><span class="line">                <span class="built_in">this</span>::encodeJson);</span><br><span class="line">        WritableDataSourceRegistry.registerSystemDataSource(systemRuleWDS);</span><br><span class="line">        <span class="comment">// 授权规则</span></span><br><span class="line">        ReadableDataSource&lt;String, List&lt;AuthorityRule&gt;&gt; authorityRuleRDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileRefreshableDataSource</span>&lt;&gt;(</span><br><span class="line">                authorityRulePath,</span><br><span class="line">                authorityRuleListParser</span><br><span class="line">        );</span><br><span class="line">        AuthorityRuleManager.register2Property(authorityRuleRDS.getProperty());</span><br><span class="line">        WritableDataSource&lt;List&lt;AuthorityRule&gt;&gt; authorityRuleWDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileWritableDataSource</span>&lt;&gt;(</span><br><span class="line">                authorityRulePath,</span><br><span class="line">                <span class="built_in">this</span>::encodeJson</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        WritableDataSourceRegistry.registerAuthorityDataSource(authorityRuleWDS);</span><br><span class="line">        <span class="comment">// 热点参数规则</span></span><br><span class="line">        ReadableDataSource&lt;String, List&lt;ParamFlowRule&gt;&gt; paramFlowRuleRDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileRefreshableDataSource</span>&lt;&gt;(</span><br><span class="line">                paramFlowRulePath,</span><br><span class="line">                paramFlowRuleListParser</span><br><span class="line">        );</span><br><span class="line">        ParamFlowRuleManager.register2Property(paramFlowRuleRDS.getProperty());</span><br><span class="line">        WritableDataSource&lt;List&lt;ParamFlowRule&gt;&gt; paramFlowRuleWDS = <span class="keyword">new</span></span><br><span class="line">                <span class="title class_">FileWritableDataSource</span>&lt;&gt;(</span><br><span class="line">                paramFlowRulePath,</span><br><span class="line">                <span class="built_in">this</span>::encodeJson</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        ModifyParamFlowRulesCommandHandler.setWritableDataSource(paramFlowRuleWDS);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Converter&lt;String, List&lt;FlowRule&gt;&gt; flowRuleListParser = source -&gt;</span><br><span class="line">            JSON.parseObject(</span><br><span class="line">                    source,</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;FlowRule&gt;&gt;() &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">            );</span><br><span class="line">    <span class="keyword">private</span> Converter&lt;String, List&lt;DegradeRule&gt;&gt; degradeRuleListParser = source</span><br><span class="line">            -&gt; JSON.parseObject(</span><br><span class="line">            source,</span><br><span class="line">            <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;DegradeRule&gt;&gt;() &#123;</span><br><span class="line">            &#125;</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">private</span> Converter&lt;String, List&lt;SystemRule&gt;&gt; systemRuleListParser = source -&gt;</span><br><span class="line">            JSON.parseObject(</span><br><span class="line">                    source, <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;SystemRule&gt;&gt;() &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">            );</span><br><span class="line">    <span class="keyword">private</span> Converter&lt;String, List&lt;AuthorityRule&gt;&gt; authorityRuleListParser =</span><br><span class="line">            source -&gt; JSON.parseObject(</span><br><span class="line">                    source,</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;AuthorityRule&gt;&gt;() &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">            );</span><br><span class="line">    <span class="keyword">private</span> Converter&lt;String, List&lt;ParamFlowRule&gt;&gt; paramFlowRuleListParser =</span><br><span class="line">            source -&gt; JSON.parseObject(</span><br><span class="line">                    source,</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">TypeReference</span>&lt;List&lt;ParamFlowRule&gt;&gt;() &#123;</span><br><span class="line">                    &#125;</span><br><span class="line">            );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">mkdirIfNotExits</span><span class="params">(String filePath)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(filePath);</span><br><span class="line">        <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">            file.mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">createFileIfNotExits</span><span class="params">(String filePath)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(filePath);</span><br><span class="line">        <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">            file.createNewFile();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> &lt;T&gt; String <span class="title function_">encodeJson</span><span class="params">(T t)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> JSON.toJSONString(t);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>添加配置</li>
+</ol>
+<p>在resources下创建配置目录<code>META-INF/service</code>添加文件<code>com.alibaba.csp.sentinel.init.InitFunc</code>，然后在文件中添加上述配置类的全路径com.supergan.config.FilePersistence</p>
+<p><img src="/..%5Cimg%5C%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE.png"></p>
+<h4 id="2-拉模式"><a href="#2-拉模式" class="headerlink" title="2. 拉模式"></a>2. 拉模式</h4><blockquote>
+<p>对于push模式的数据源，如远程配置中心(ZooKeeper、Nacos、Apollo等)，推送操作不应由Sentinel客户端进行，而应该经控制台统一进行管理，直接进行推送，数据源仅负责获取配置中心的配置并更新到本地，因此推送规则正确做法：<strong>配置中心控制台&#x2F;Sentinel控制台 $$\longrightarrow$$ 配置中心$$\longrightarrow$$ Sentinel数据源$$\longrightarrow$$ Sentinel</strong>，而不是经Sentinel数据源推送到配置中心</p>
+</blockquote>
+<h5 id="2-1-实现过程"><a href="#2-1-实现过程" class="headerlink" title="2.1 实现过程"></a>2.1 实现过程</h5><ol>
+<li>引入依赖</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--利用nacos实现sentinel规则持久化--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba.csp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>sentinel-datasource-nacos<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在nacos控制台添加规则配置文件</li>
+</ol>
+<p><img src="/..%5Cimg%5Cnacos%E9%85%8D%E7%BD%AE.png"></p>
+<ol start="3">
+<li>添加sentinel.datasource配置</li>
+</ol>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">datasource:</span></span><br><span class="line">        <span class="attr">flow-rul:</span> <span class="comment"># 名称随意</span></span><br><span class="line">          <span class="attr">nacos:</span></span><br><span class="line">            <span class="attr">server-addr:</span> <span class="string">localhost:8848</span> <span class="comment"># nacos地址</span></span><br><span class="line">            <span class="attr">username:</span> <span class="string">nacos</span></span><br><span class="line">            <span class="attr">password:</span> <span class="string">nacos</span></span><br><span class="line">            <span class="attr">dataId:</span> <span class="string">service-order-flow-rule</span> <span class="comment">#nacos配置的dataId</span></span><br><span class="line">            <span class="attr">rule-type:</span> <span class="string">flow</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/09/java/SpringCloudAlibaba/Sentinel%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/Sentinel%E6%8C%81%E4%B9%85%E5%8C%96/" data-id="cl4ihkcrl000p7sohfqd18n0k" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/dubbo/springboot" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/04/25/java/dubbo/springboot/" class="article-date">
+  <time class="dt-published" datetime="2022-04-25T09:50:40.573Z" itemprop="datePublished">2022-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="springboot"><a href="#springboot" class="headerlink" title="springboot"></a>springboot</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/04/25/java/dubbo/springboot/" data-id="cl4ihkcr700087soh4gzi4tdo" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/Zookeeper/Zookeeper JavaAPI" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/31/java/Zookeeper/Zookeeper%20JavaAPI/" class="article-date">
+  <time class="dt-published" datetime="2022-03-31T09:20:51.314Z" itemprop="datePublished">2022-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Zookeeper-JavaAPI"><a href="#Zookeeper-JavaAPI" class="headerlink" title="Zookeeper JavaAPI"></a>Zookeeper JavaAPI</h1><h3 id="Curator"><a href="#Curator" class="headerlink" title="Curator"></a>Curator</h3><pre><code>API常用操作
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">- 建立连接 </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> connectString       连接字符串，zk server 地址和端口 &quot;192.168.40.133:2181&quot;</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> sessionTimeoutMs    会话超时时间ms</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> connectionTimeoutMs 连接超时时间</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> retryPolicy         重试策略</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="type">RetryPolicy</span> <span class="variable">retry</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExponentialBackoffRetry</span>(<span class="number">3000</span>, <span class="number">10</span>);</span><br><span class="line">    <span class="comment">//方式1</span></span><br><span class="line">    <span class="type">CuratorFramework</span> <span class="variable">client</span> <span class="operator">=</span> CuratorFrameworkFactory.newClient(<span class="string">&quot;192.168.40.133:2181&quot;</span>,</span><br><span class="line">    <span class="number">60</span> * <span class="number">1000</span>, <span class="number">15</span> * <span class="number">1000</span>, retry);</span><br><span class="line">    client.start();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//方式2</span></span><br><span class="line">    <span class="type">CuratorFramework</span> <span class="variable">build</span> <span class="operator">=</span> CuratorFrameworkFactory.builder().connectString(<span class="string">&quot;192.168.40.133:2181&quot;</span>)</span><br><span class="line">                .sessionTimeoutMs(<span class="number">60</span> * <span class="number">1000</span>)</span><br><span class="line">                .connectionTimeoutMs(<span class="number">15</span> * <span class="number">1000</span>)</span><br><span class="line">                .retryPolicy(retry).namespace(<span class="string">&quot;supergan&quot;</span>)<span class="comment">//namespace相当于在节点前添加了根节点</span></span><br><span class="line">                .build();</span><br><span class="line">        build.start();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- 添加节点</span><br><span class="line">    <span class="comment">//创建节点：creat 持久 临时 顺序 数据</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//1.基本创建</span></span><br><span class="line">    <span class="comment">//如果创建节点没有指定数据，则将当前客户端ip作为数据储存</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> client.create().forPath(<span class="string">&quot;/app1&quot;</span>);</span><br><span class="line">    System.out.println(path);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 创建带有数据的节点</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path1</span> <span class="operator">=</span> client.create().forPath(<span class="string">&quot;/app2&quot;</span>, <span class="string">&quot;hello&quot;</span>.getBytes());</span><br><span class="line">    System.out.println(path1);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3. 设置节点类型withMode()</span></span><br><span class="line">    <span class="comment">//默认类型：持久化</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path2</span> <span class="operator">=</span> client.create().withMode(CreateMode.EPHEMERAL).forPath(<span class="string">&quot;/app3&quot;</span>);<span class="comment">//设置为临时</span></span><br><span class="line">    System.out.println(path2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//4. 创建多级节点</span></span><br><span class="line">    <span class="comment">//creatingParentsIfNeeded():如果父节点不存在则创建</span></span><br><span class="line">    <span class="type">String</span> <span class="variable">path3</span> <span class="operator">=</span> client.create().creatingParentsIfNeeded().forPath(<span class="string">&quot;/app4/p1&quot;</span>);</span><br><span class="line">    System.out.println(path3);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 删除节点</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- 修改节点</span><br><span class="line">    <span class="comment">//修改数据</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//1. 修改数据</span></span><br><span class="line">    client.setData().forPath(<span class="string">&quot;/app1&quot;</span>,<span class="string">&quot;haha&quot;</span>.getBytes());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 根据版本修改</span></span><br><span class="line">    <span class="type">Stat</span> <span class="variable">status</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Stat</span>();</span><br><span class="line">    client.getData().storingStatIn(status).forPath(<span class="string">&quot;/app1&quot;</span>);</span><br><span class="line">    <span class="type">int</span> <span class="variable">version</span> <span class="operator">=</span> status.getVersion();</span><br><span class="line">    client.setData().withVersion(version).forPath(<span class="string">&quot;/app1&quot;</span>,<span class="string">&quot;haha&quot;</span>.getBytes());    </span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- 查询节点</span><br><span class="line">    <span class="comment">//查询节点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//1. 查询数据:get</span></span><br><span class="line">    <span class="type">byte</span>[] data = client.getData().forPath(<span class="string">&quot;/app1&quot;</span>);</span><br><span class="line">    System.out.println(<span class="keyword">new</span> <span class="title class_">String</span>(data));</span><br><span class="line"></span><br><span class="line">    <span class="comment">//2. 查询子节点:ls</span></span><br><span class="line">    List&lt;String&gt; path = client.getChildren().forPath(<span class="string">&quot;/app4&quot;</span>);</span><br><span class="line">    System.out.println(path);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//3. 查询节点状态信息:ls -s</span></span><br><span class="line">    <span class="type">Stat</span> <span class="variable">status</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Stat</span>();</span><br><span class="line">    client.getData().storingStatIn(status).forPath(<span class="string">&quot;/app1&quot;</span>);</span><br><span class="line">    System.out.println(status);   </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- Watch事件监听</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+<pre><code>- 分布式锁实现
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/31/java/Zookeeper/Zookeeper%20JavaAPI/" data-id="cl4ihkcr9000a7soh42wd8m10" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/Zookeeper/Zookeeper" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/31/java/Zookeeper/Zookeeper/" class="article-date">
+  <time class="dt-published" datetime="2022-03-31T08:18:45.059Z" itemprop="datePublished">2022-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Zookeeper"><a href="#Zookeeper" class="headerlink" title="Zookeeper"></a>Zookeeper</h1><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><pre><code>树形目录服务，分布式的、开源的分布式应用程序的协调服务。（管理分布式应用程序）
+主要功能：
+    1. 配置管理
+    2. 分布式锁
+    3. 集群管理
+</code></pre>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><ul>
+<li><p>ZooKeeper 是一个树形目录服务，其数据模型和 Unix 的文件系统目录树很类似，拥有一个层次化结构</p>
+</li>
+<li><p>这里面的每一个节点都被称为： ZNode，每个节点上都会保存自己的数据和节点信息</p>
+</li>
+<li><p>节点可以拥有子节点，同时也允许少量（1MB）数据存储在该节点之下</p>
+<p>   节点分为四类：<br>   1. PERSISTENT 持久化节点<br>   2. EPHEMERAL 临时节点 ：-e<br>   3. PERSISTENT_SEQUENTIAL 持久化顺序节点 ：-s<br>   4. EPHEMERAL_SEQUENTIAL 临时顺序节点 ：-es</p>
+</li>
+</ul>
+<h3 id="服务端命令"><a href="#服务端命令" class="headerlink" title="服务端命令"></a>服务端命令</h3><pre><code>- 启动 ZooKeeper 服务: ./zkServer.sh start
+- 查看 ZooKeeper 服务状态: ./zkServer.sh status
+- 停止 ZooKeeper 服务: ./zkServer.sh stop
+- 重启 ZooKeeper 服务: ./zkServer.sh restart
+</code></pre>
+<h3 id="客户端命令"><a href="#客户端命令" class="headerlink" title="客户端命令"></a>客户端命令</h3><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.&#x2F;zkCli.sh –server ip:port</td>
+<td align="center">连接 ZooKeeper 服务端</td>
+</tr>
+<tr>
+<td align="center">quit</td>
+<td align="center">断开连接</td>
+</tr>
+<tr>
+<td align="center">help</td>
+<td align="center">查看命令帮助</td>
+</tr>
+<tr>
+<td align="center">ls 目录</td>
+<td align="center">显示指定目录下节点</td>
+</tr>
+<tr>
+<td align="center">create &#x2F;节点 path value</td>
+<td align="center">创建持久化节点</td>
+</tr>
+<tr>
+<td align="center">get &#x2F;节点 path</td>
+<td align="center">获取节点值</td>
+</tr>
+<tr>
+<td align="center">set &#x2F;节点 path value</td>
+<td align="center">设置节点值</td>
+</tr>
+<tr>
+<td align="center">delete &#x2F;节点 path</td>
+<td align="center">删除单个节点</td>
+</tr>
+<tr>
+<td align="center">deleteall &#x2F;节点 path</td>
+<td align="center">删除带有子节点的节点</td>
+</tr>
+<tr>
+<td align="center">create -e &#x2F;节点 path value</td>
+<td align="center">创建临时节点</td>
+</tr>
+<tr>
+<td align="center">create -s &#x2F;节点 path value</td>
+<td align="center">创建顺序节点</td>
+</tr>
+<tr>
+<td align="center">creat -es &#x2F;节点 value</td>
+<td align="center">创建临时顺序节点</td>
+</tr>
+<tr>
+<td align="center">ls –s &#x2F;节点 path</td>
+<td align="center">查询节点详细信息wui</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/31/java/Zookeeper/Zookeeper/" data-id="cl4ihkcra000b7soh5r806kd8" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/Zookeeper/vx" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/31/java/Zookeeper/vx/" class="article-date">
+  <time class="dt-published" datetime="2022-03-31T08:18:34.047Z" itemprop="datePublished">2022-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        {"created_time":"2022-03-31T08:18:34Z","files":[{"attachment_folder":"","created_time":"2022-03-31T08:18:45Z","id":"2","modified_time":"2022-03-31T09:05:52Z","name":"Zookeeper.md","signature":"67535714477029","tags":[]},{"attachment_folder":"","created_time":"2022-03-31T09:20:51Z","id":"3","modified_time":"2022-04-01T01:17:02Z","name":"Zookeeper JavaAPI.md","signature":"49299283341939","tags":[]}],"folders":[],"id":"1","modified_time":"2022-03-31T08:18:34Z","signature":"82331876811738","version":3}
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/31/java/Zookeeper/vx/" data-id="cl4ihkcrd000c7soh5vzf5f5i" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/Zookeeper/vx_notebook/vx_notebook" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/31/java/Zookeeper/vx_notebook/vx_notebook/" class="article-date">
+  <time class="dt-published" datetime="2022-03-31T08:18:34.046Z" itemprop="datePublished">2022-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        {"attachment_folder":"vx_attachments","config_mgr":"vx.vnotex","created_time":"2022-03-31T08:18:34Z","description":"","extra_configs":{},"history":[],"image_folder":"vx_images","name":"zookeeper","tag_graph":"","version":3,"version_controller":"dummy.vnotex"}
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/31/java/Zookeeper/vx_notebook/vx_notebook/" data-id="cl4ihkcro000v7soh4f8i50ec" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/redis/nosql" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/29/java/redis/nosql/" class="article-date">
+  <time class="dt-published" datetime="2022-03-29T08:05:34.091Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="nosql"><a href="#nosql" class="headerlink" title="nosql"></a>nosql</h1><p><img src="/vx_images/84360109220371.png" alt="ACID"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/29/java/redis/nosql/" data-id="cl4ihkcri000i7sohe7ukhx97" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/redis/3V+3高" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/29/java/redis/3V+3%E9%AB%98/" class="article-date">
+  <time class="dt-published" datetime="2022-03-29T07:58:42.998Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="3V-3高"><a href="#3V-3高" class="headerlink" title="3V+3高"></a>3V+3高</h1><h3 id="互联网需求的3高"><a href="#互联网需求的3高" class="headerlink" title="互联网需求的3高"></a>互联网需求的3高</h3><pre><code>高并发
+高扩展
+高性能
+</code></pre>
+<h3 id="大数据时代的3V"><a href="#大数据时代的3V" class="headerlink" title="大数据时代的3V"></a>大数据时代的3V</h3><pre><code>海量Volume
+多样Variety
+实时Velocity
+</code></pre>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/29/java/redis/3V+3%E9%AB%98/" data-id="cl4ihkcrh000h7soh72ms6flg" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-java/注解反射/反射" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E5%8F%8D%E5%B0%84/" class="article-date">
+  <time class="dt-published" datetime="2022-03-29T06:41:30.221Z" itemprop="datePublished">2022-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h1><blockquote>
+<p>Reflection，反射机制允许程序在执行期直接操作任意对象的内部属性以及方法</p>
+</blockquote>
+<pre><code> Java反射机制提供的功能：
+    - 判断一个对象所属的类
+    - 构造任意一个类的对象
+    - 判断任意一个类所具有的成员变量和方法
+    - 获取泛型信息
+    - 调用任意一个对象的成员变量和方法
+    - 处理注解
+    - 生成动态代理
+    
+优点：实现动态创建对象和编译，灵活性
+缺点：对性能有影响
+</code></pre>
+<p><strong>一个类只有一个Class对象</strong><br>    <img src="/vx_images/144963015220370.png" alt="Class类"></p>
+<p>获取Class对象以及其父类的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Student</span>();</span><br><span class="line">        System.out.println(<span class="string">&quot;这个人是&quot;</span>+user.name);<span class="comment">//这个人是学生</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//1.通过对象获得</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c1</span> <span class="operator">=</span> user.getClass();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.forName获得</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c2</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;com.supergan.kangan.controller.Student&quot;</span>);</span><br><span class="line">        System.out.println(c2.hashCode());<span class="comment">//558638686</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//3.通过类名.class获得</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c3</span> <span class="operator">=</span> Student.class;</span><br><span class="line">        System.out.println(c3.hashCode());<span class="comment">//558638686</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//4.基本内置类型的包装类都有一个Type属性</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c4</span> <span class="operator">=</span> Integer.TYPE;</span><br><span class="line">        System.out.println(c4);<span class="comment">//int</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//获得父类类型</span></span><br><span class="line">        <span class="type">Class</span> <span class="variable">c5</span> <span class="operator">=</span> c1.getSuperclass();</span><br><span class="line">        System.out.println(c5);<span class="comment">//class com.supergan.kangan.controller.User</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">User</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">User</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">User</span><span class="params">(String name, Integer age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;User&#123;&quot;</span> +</span><br><span class="line">                <span class="string">&quot;name=&#x27;&quot;</span> + name + <span class="string">&#x27;\&#x27;&#x27;</span> +</span><br><span class="line">                <span class="string">&#x27;&#125;&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span> <span class="keyword">extends</span> <span class="title class_">User</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Student</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.name=<span class="string">&quot;学生&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span> <span class="keyword">extends</span> <span class="title class_">User</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Teacher</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.name=<span class="string">&quot;老师&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>   <img src="/vx_images/488233015238796.png" alt="Class类的常用方法"></p>
+<pre><code>类的加载过程：
+        1.加载：将class文件加载到内存，并将静态数据转换为方法区运行时的数据结构，然后生成class对象
+        2.链接：将java类的二进制代码合并到JVM运行状态中
+               * 验证：是否会报错
+               * 准备：static初始化
+               * 解析：常量池类型替换为真实类型
+       3.初始化
+       
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Demo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException &#123;</span><br><span class="line">        <span class="type">U</span> <span class="variable">u</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">U</span>();</span><br><span class="line">        System.out.println(u.m);</span><br><span class="line">      <span class="comment">/*</span></span><br><span class="line"><span class="comment">        U类静态代码块初始化</span></span><br><span class="line"><span class="comment">        U类无参构造初始化</span></span><br><span class="line"><span class="comment">        200</span></span><br><span class="line"><span class="comment">      */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">U</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;U类静态代码块初始化&quot;</span>);</span><br><span class="line">        m = <span class="number">200</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">U</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;U类无参构造初始化&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/29/java/%E6%B3%A8%E8%A7%A3%E5%8F%8D%E5%B0%84/%E5%8F%8D%E5%B0%84/" data-id="cl4ihkcrj000l7soh2agh6gn4" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">下一页 &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/17/hello-world/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/17/mysql/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/cn.itcast.ConcurrencyTest/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/index/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 supergan<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

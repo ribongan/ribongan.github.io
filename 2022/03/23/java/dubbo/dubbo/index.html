@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>supergan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="dubbo1. 创建服务提供者Provider模块 2. 创建服务消费者Consumer模块 3. 在服务提供者模块编写UserServiceImpl提供服务 4. 在服务消费者中的 UserController 远程调用 UserServiceImpl 提供的服务 5. 分别启动两个服务，测试      SOA架构@Autowired 本地注入 @Reference 远程注入：     1. 从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supergan">
+<meta property="og:url" content="http://example.com/2022/03/23/java/dubbo/dubbo/index.html">
+<meta property="og:site_name" content="supergan">
+<meta property="og:description" content="dubbo1. 创建服务提供者Provider模块 2. 创建服务消费者Consumer模块 3. 在服务提供者模块编写UserServiceImpl提供服务 4. 在服务消费者中的 UserController 远程调用 UserServiceImpl 提供的服务 5. 分别启动两个服务，测试      SOA架构@Autowired 本地注入 @Reference 远程注入：     1. 从">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/vx_images/28534214220372.png">
+<meta property="og:image" content="http://example.com/vx_images/530094214238798.png">
+<meta property="og:image" content="http://example.com/vx_images/435804714226665.png">
+<meta property="og:image" content="http://example.com/vx_images/245294715246831.png">
+<meta property="article:published_time" content="2022-03-23T04:00:00.857Z">
+<meta property="article:modified_time" content="2022-03-31T08:16:03.426Z">
+<meta property="article:author" content="supergan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/vx_images/28534214220372.png">
+  
+    <link rel="alternate" href="/atom.xml" title="supergan" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">supergan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java/dubbo/dubbo" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/03/23/java/dubbo/dubbo/" class="article-date">
+  <time class="dt-published" datetime="2022-03-23T04:00:00.857Z" itemprop="datePublished">2022-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="dubbo"><a href="#dubbo" class="headerlink" title="dubbo"></a>dubbo</h1><pre><code>1. 创建服务提供者Provider模块
+2. 创建服务消费者Consumer模块
+3. 在服务提供者模块编写UserServiceImpl提供服务
+4. 在服务消费者中的 UserController 远程调用 UserServiceImpl 提供的服务
+5. 分别启动两个服务，测试
+</code></pre>
+<p>   <img src="/vx_images/28534214220372.png" alt="Dubbo原理运行图"></p>
+<h3 id="SOA架构"><a href="#SOA架构" class="headerlink" title="SOA架构"></a>SOA架构</h3><pre><code>@Autowired 本地注入
+@Reference 远程注入：
+    1. 从zookeeper注册中心获取userService的访问url
+    2. 进行远程调用RPC
+    3. 将结果封装为一个代理对象。给变量赋值
+    
+</code></pre>
+<h3 id="高级特性"><a href="#高级特性" class="headerlink" title="高级特性"></a>高级特性</h3><h4 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h4><pre><code>消费者调用生产者服务时，生产者会将数据封装成User对象，返回给消费者，我们需要将User对象序列化（实现Serializable接口）成流的数据放到二者传输的流的管道。
+</code></pre>
+<p>   <img src="/vx_images/530094214238798.png" alt="序列化"></p>
+<h4 id="地址缓存"><a href="#地址缓存" class="headerlink" title="地址缓存"></a>地址缓存</h4><pre><code>注册中心挂了，服务仍然可以访问，dubbo服务消费者第一次调用时，会将服务提供放地址缓存到本地，以后调用不会访问注册中心；
+当服务提供者地址改变时，注册中心会通知服务消费者
+ 
+</code></pre>
+<h4 id="超时与重试"><a href="#超时与重试" class="headerlink" title="超时与重试"></a>超时与重试</h4><pre><code>基本流程：
+   1. 用户来访问服务消费者
+   2. 服务消费者创建线程单独访问服务提供者调用服务
+   3. 服务提供者处理好数据返回结果给服务消费者
+   4. 服务消费者封装结果给用户
+</code></pre>
+<p><img src="/vx_images/435804714226665.png" alt="服务堵塞"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">设置超时时间:</span><br><span class="line">    <span class="comment">//服务的提供者的Service注解,通过 retries 属性来设置重试次数。默认为 2 次加上开始的一次一共三次</span></span><br><span class="line">    <span class="meta">@Service(timeout = 3000,retries = 2)</span><span class="comment">//当前服务3秒超时,重试2次，一共3次</span></span><br><span class="line">    <span class="comment">//服务的消费者的Reference注解</span></span><br><span class="line">    <span class="meta">@Reference(timeout = 1000)</span><span class="comment">//远程注入</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>一般建议将 timeout 配置在服务的提供者 Service 这里 服务的消费者 Reference 可以覆盖 Service 的超时</p>
+</blockquote>
+<h4 id="多版本"><a href="#多版本" class="headerlink" title="多版本"></a>多版本</h4><p>   <code>灰度发布</code>：当出现新功能时，会让一部分用户先使用新功能，用户反馈没问题时，再将所有用户迁移到新功能<br>   <img src="/vx_images/245294715246831.png" alt="多版本"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//服务提供者</span></span><br><span class="line"><span class="meta">@Reference(version = &quot;v2.0&quot;)</span><span class="comment">//远程注入 选择版本</span></span><br><span class="line"><span class="keyword">private</span> UserService userService;</span><br><span class="line"></span><br><span class="line"><span class="comment">//服务消费者 v1.0</span></span><br><span class="line"><span class="meta">@Service(version = &quot;v1.0&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl1</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">//服务消费者 v2.0</span></span><br><span class="line"><span class="meta">@Service(version = &quot;v2.0&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserServiceImpl2</span> <span class="keyword">implements</span> <span class="title class_">UserService</span> </span><br></pre></td></tr></table></figure>
+
+<h4 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h4><pre><code>负载均衡策略：
+配置策略：@Reference(loadbalance=&quot;random/roundRobin/...&quot;)
+配置权重：@Service(weight=100)
+   - Random:按权重随机    
+   - RoundRobin:按权重轮询
+   - LeastActive：最少活跃调用数，相同活跃数的随机,根据服务提供者的活跃程度进行调用
+   - ConsistentHash：一致性 Hash，相同参数的请求总是发到同一提供者,根据请求参数的值，利用 Hash 算法得出要去哪个服务提供者（值相同 Hash 就相同，就会一直去相同的服务提供者）
+   
+</code></pre>
+<h4 id="集群容错"><a href="#集群容错" class="headerlink" title="集群容错"></a>集群容错</h4><pre><code>集群容错模式：
+配置：@Refernece (cluster = “failove/...”) // 默认重试
+- Failover Cluster：失败重试。默认值。当出现失败，重试其它服务器 ，默认重试 2 次，使用 retries 配置
+一般用于读操作
+- Failfast Cluster ：快速失败，只发起一次调用，失败立即报错
+通常用于写操作。
+- Failsafe Cluster ：失败安全，出现异常时，直接忽略，返回一个空结果
+- Failback Cluster ：失败自动恢复，后台记录失败请求，定时重发
+通常用于消息通知操作。
+- Forking Cluster ：并行调用多个服务器，只要一个成功即返回 (比较耗性能)
+- Broadcast Cluster ：广播调用所有提供者，逐个调用，任意一台报错则报错
+</code></pre>
+<h4 id="服务降级"><a href="#服务降级" class="headerlink" title="服务降级"></a>服务降级</h4><pre><code>服务降级方式：
+配置：@Refernece(mock=&quot;force:return null/fail:return null&quot;)
+    - mock= force:return null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用
+    - mock=fail:return null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常
+</code></pre>
+<blockquote>
+<p>用来容忍不重要服务不稳定时对调用方的影响</p>
+</blockquote>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/23/java/dubbo/dubbo/" data-id="cl4ihkcr500067sohe4qo41wg" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/03/23/java/vue/%E5%88%86%E5%B8%83%E5%BC%8F%E7%B3%BB%E7%BB%9F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/03/19/java/dubbo/dubbo%E5%8E%9F%E7%90%86%E4%B8%8E%E6%9C%BA%E5%88%B6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/17/hello-world/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/17/mysql/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/cn.itcast.ConcurrencyTest/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/index/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 supergan<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

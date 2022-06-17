@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>supergan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="JPA中null值覆盖问题解决1. 在对应实体类上添加注解12@DynamicInsert(true)@DynamicUpdate(true)  2. 添加工具类BeanUtils123456789101112131415161718192021222324252627282930313233343536373839404142434445464748public class BeanUtils">
+<meta property="og:type" content="article">
+<meta property="og:title" content="supergan">
+<meta property="og:url" content="http://example.com/2022/05/24/java/SpringCloudAlibaba/JPA/JPA%E4%B8%ADnull%E5%80%BC%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/index.html">
+<meta property="og:site_name" content="supergan">
+<meta property="og:description" content="JPA中null值覆盖问题解决1. 在对应实体类上添加注解12@DynamicInsert(true)@DynamicUpdate(true)  2. 添加工具类BeanUtils123456789101112131415161718192021222324252627282930313233343536373839404142434445464748public class BeanUtils">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-24T02:46:34.756Z">
+<meta property="article:modified_time" content="2022-05-24T02:46:34.756Z">
+<meta property="article:author" content="supergan">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="supergan" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">supergan</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://example.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-java/SpringCloudAlibaba/JPA/JPA中null值覆盖问题解决" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2022/05/24/java/SpringCloudAlibaba/JPA/JPA%E4%B8%ADnull%E5%80%BC%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" class="article-date">
+  <time class="dt-published" datetime="2022-05-24T02:46:34.756Z" itemprop="datePublished">2022-05-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h5 id="JPA中null值覆盖问题解决"><a href="#JPA中null值覆盖问题解决" class="headerlink" title="JPA中null值覆盖问题解决"></a>JPA中null值覆盖问题解决</h5><h6 id="1-在对应实体类上添加注解"><a href="#1-在对应实体类上添加注解" class="headerlink" title="1. 在对应实体类上添加注解"></a>1. 在对应实体类上添加注解</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@DynamicInsert(true)</span></span><br><span class="line"><span class="meta">@DynamicUpdate(true)</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="2-添加工具类BeanUtils"><a href="#2-添加工具类BeanUtils" class="headerlink" title="2. 添加工具类BeanUtils"></a>2. 添加工具类BeanUtils</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BeanUtils</span> <span class="keyword">extends</span> <span class="title class_">org</span>.springframework.beans.BeanUtils &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * bean copy不复制null值</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">copyPropertiesWithoutNull</span><span class="params">(Object source, Object target)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(source == <span class="literal">null</span> || target == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        Class&lt;?&gt; actualEditable = target.getClass();</span><br><span class="line">        Class&lt;?&gt; sourceClass = source.getClass();</span><br><span class="line">        PropertyDescriptor[] targetPds = getPropertyDescriptors(actualEditable);</span><br><span class="line">        <span class="keyword">for</span> (PropertyDescriptor targetPd : targetPds) &#123;</span><br><span class="line">            <span class="keyword">if</span>(targetPd.getWriteMethod() == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">PropertyDescriptor</span> <span class="variable">sourcePd</span> <span class="operator">=</span> getPropertyDescriptor(sourceClass, targetPd.getName());</span><br><span class="line">            <span class="keyword">if</span>(sourcePd == <span class="literal">null</span> || sourcePd.getReadMethod() == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="type">Method</span> <span class="variable">readMethod</span> <span class="operator">=</span> sourcePd.getReadMethod();</span><br><span class="line">                <span class="keyword">if</span> (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) &#123;</span><br><span class="line">                    readMethod.setAccessible(<span class="literal">true</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">Object</span> <span class="variable">value</span> <span class="operator">=</span> readMethod.invoke(source);</span><br><span class="line">                setValue(target, targetPd, value);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">FatalBeanException</span>(<span class="string">&quot;Could not copy properties from source to target&quot;</span>, ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 设置值到目标bean</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setValue</span><span class="params">(Object target, PropertyDescriptor targetPd, Object value)</span> <span class="keyword">throws</span> IllegalAccessException, InvocationTargetException &#123;</span><br><span class="line">        <span class="comment">// 这里判断如下value是否为空</span></span><br><span class="line">        <span class="keyword">if</span> (value != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">Method</span> <span class="variable">writeMethod</span> <span class="operator">=</span> targetPd.getWriteMethod();</span><br><span class="line">            <span class="keyword">if</span> (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) &#123;</span><br><span class="line">                writeMethod.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            writeMethod.invoke(target, value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h6 id="3-在启动类上添加注解"><a href="#3-在启动类上添加注解" class="headerlink" title="3. 在启动类上添加注解"></a>3. 在启动类上添加注解</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableJpaRepositories(repositoryBaseClass = ZeusJpaRepository.class)</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="4-添加jpa-ZeusJpaRepository类覆盖save-方法"><a href="#4-添加jpa-ZeusJpaRepository类覆盖save-方法" class="headerlink" title="4. 添加jpa.ZeusJpaRepository类覆盖save()方法"></a>4. 添加jpa.ZeusJpaRepository类覆盖save()方法</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ZeusJpaRepository</span>&lt;T, ID&gt; <span class="keyword">extends</span></span><br><span class="line">        <span class="title class_">SimpleJpaRepository</span>&lt;T, ID&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> JpaEntityInformation&lt;T, ?&gt; jpaEntityInformation;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Creates a new &#123;<span class="doctag">@link</span> ZeusJpaRepository&#125; to manage objects of the given &#123;<span class="doctag">@link</span> JpaEntityInformation&#125;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entityInformation must not be &#123;<span class="doctag">@literal</span> null&#125;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> entityManager     must not be &#123;<span class="doctag">@literal</span> null&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ZeusJpaRepository</span><span class="params">(JpaEntityInformation&lt;T, ?&gt; entityInformation, EntityManager entityManager)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(entityInformation, entityManager);</span><br><span class="line">        <span class="built_in">this</span>.jpaEntityInformation = entityInformation;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 覆盖原来实现,不更新null字段</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> &lt;S <span class="keyword">extends</span> <span class="title class_">T</span>&gt; S <span class="title function_">save</span><span class="params">(S entity)</span> &#123;</span><br><span class="line">        <span class="type">ID</span> <span class="variable">id</span> <span class="operator">=</span> (ID) jpaEntityInformation.getId(entity);</span><br><span class="line">        <span class="keyword">if</span> (id != <span class="literal">null</span>) &#123;</span><br><span class="line">            Optional&lt;T&gt; op = findById(id);</span><br><span class="line">            <span class="keyword">if</span> (op.isPresent()) &#123;</span><br><span class="line">                <span class="type">T</span> <span class="variable">t</span> <span class="operator">=</span> op.get();</span><br><span class="line">                BeanUtils.copyPropertiesWithoutNull(entity, t);</span><br><span class="line">                entity = (S) t;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">super</span>.save(entity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>可以将<code>ZeusJpaRepository</code>和<code>BeanUtils</code>都放在公共模块，不过需要添加<strong>jpa</strong>依赖</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>参考连接<a target="_blank" rel="noopener" href="http://www.javashuo.com/article/p-sihtyllv-mr.html">JPA踩坑记：Spring Data Jpa 更新为null的问题(save方法保存时null值会被更新到数据库) - JavaShuo</a></p>
+<blockquote>
+<p>&#x3D;&#x3D;注意：&#x3D;&#x3D;对于不需要导入jpa依赖的模块，需要将jpa依赖剔除，否则会导致没有配置数据源而报错</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--公共模块common--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tensquare_common<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--剔除jpa依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/05/24/java/SpringCloudAlibaba/JPA/JPA%E4%B8%ADnull%E5%80%BC%E8%A6%86%E7%9B%96%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" data-id="cl4ihkcrl000o7soh14as7wic" data-title="" class="article-share-link">分享</a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2022/05/30/JVM/JVM%E5%85%A5%E9%97%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/05/17/java/SpringCloudAlibaba/Sentinel%E6%9C%8D%E5%8A%A1%E5%AE%B9%E9%94%99/%E6%B5%81%E6%8E%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title"></div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/06/17/hello-world/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/17/mysql/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%BC%82%E6%AD%A5%E5%92%8C%E5%90%8C%E6%AD%A5/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/cn.itcast.ConcurrencyTest/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/30/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E8%B5%84%E6%96%99/concurrent/jcstress_ordering/target/results/index/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 supergan<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
